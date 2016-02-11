@@ -10,7 +10,7 @@
 #include <iomanip>
 #include <cstring>
 
-#define BIT 4
+#define BIT 6
 #define POINTS (POWER2<BIT>::value)
 #define FREQ 1
 #define DT (1./FREQ)
@@ -39,6 +39,8 @@ int main()
 
 	dft.Run();
 	radix2.Run();
+	radix4.Run();
+	radix8.Run();
 
 	cout << " output dft: " << endl;
 	for (int i = 0; i < POINTS; i++) {
@@ -48,7 +50,14 @@ int main()
 	for (int i = 0; i < POINTS; i++) {
 		cout << i << fixed << setw(15) << radix2.x[i].real << setw(15) << radix2.x[i].imag << endl;
 	}
-
+	cout << " output radix-4: " << endl;
+	for (int i = 0; i < POINTS; i++) {
+		cout << i << fixed << setw(15) << radix4.x[i].real << setw(15) << radix4.x[i].imag << endl;
+	}
+	cout << " output radix-8: " << endl;
+	for (int i = 0; i < POINTS; i++) {
+		cout << i << fixed << setw(15) << radix8.x[i].real << setw(15) << radix8.x[i].imag << endl;
+	}
 	//cout << " output " << endl;
 	//for (int i = 0; i < POINTS; i++) {
 	//	cout << i << setw(15) << dft.out[i].real << " , " << setw(15) << radix4.x[i].real << " , " << setw(15) << dft.out[i].imag << setw(15) << radix4.x[i].imag << " , " << endl;
