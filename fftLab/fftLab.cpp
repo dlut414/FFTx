@@ -2,7 +2,7 @@
 //
 
 #include "stdafx.h"
-
+#define _USE_MATH_DEFINES
 #include "FFTx.h"
 #include <cstdio>
 #include <cstdlib>
@@ -38,9 +38,9 @@ int main()
 	}
 
 	dft.Run();
-	radix2.Run();
-	radix4.Run();
-	radix8.Run();
+	radix2.Run_aligned();
+	radix4.Run_aligned();
+	radix8.Run_aligned();
 
 	cout << " output dft: " << endl;
 	for (int i = 0; i < POINTS; i++) {
