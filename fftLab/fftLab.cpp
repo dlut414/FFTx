@@ -7,73 +7,92 @@
 #include <cstdio>
 #include <cstdlib>
 #include <iostream>
+#include <fstream>
 #include <iomanip>
 #include <cstring>
 
-#define BIT 6
+#define BIT 12
 #define POINTS (POWER2<BIT>::value)
-#define FREQ 1
-#define DT (1./FREQ)
-#define OMIGA (0.5*M_PI)
+#define FREQ 50.0
 typedef float TYPE;
 
-using namespace std;
-int main()
-{
-	DFT<TYPE, BIT> dft;
-	Radix_2<TYPE, BIT> radix2;
-	Radix_4<TYPE, BIT> radix4;
-	Radix_8<TYPE, BIT> radix8;
-	for (int i = 0; i < POINTS; i++) {
-		dft.x[i] = Complex<TYPE>(sin(OMIGA*i*DT), 0);
-		radix2.x[i] = Complex<TYPE>(sin(OMIGA*i*DT), 0);
-		radix4.x[i] = Complex<TYPE>(sin(OMIGA*i*DT), 0);
-		radix8.x[i] = Complex<TYPE>(sin(OMIGA*i*DT), 0);
-	}
+DFT<TYPE, BIT> dft;
+Radix_2<TYPE, BIT> radix2;
+Radix_4<TYPE, BIT> radix4;
+Radix_8<TYPE, BIT> radix8;
 
-	cout << " input " << endl;
-	cout << " # \t Time \t Real \t Imag " << endl;
+using namespace std;
+int main() {
+	const TYPE PI = TYPE(3.14159265358979323846);
+	///test 1
 	for (int i = 0; i < POINTS; i++) {
-		cout << i << fixed << setw(15) << i*DT << setw(15) << dft.x[i].real << " , " << setw(15) << dft.x[i].imag << endl;
+		dft.x[i] = Complex<TYPE>(sin(i*FREQ*2*PI / (POINTS-1)), 0);
+	}
+	///test 2
+	//for (int i = 0; i < POINTS; i++) {
+	//	if (i < POINTS >> 1) {
+	//		dft.x[i] = Complex<TYPE>(1, 0);
+	//	}
+	//	else {
+	//		dft.x[i] = Complex<TYPE>(0, 0);
+	//	}
+	//}
+	for (int i = 0; i < POINTS; i++) {
+		radix2.x[i] = dft.x[i];
+		radix4.x[i] = dft.x[i];
+		radix8.x[i] = dft.x[i];
 	}
 
 	dft.Run();
-	radix2.Run_aligned();
-	radix4.Run_aligned();
-	radix8.Run_aligned();
+	radix2.Run_DIF_aligned();
+	radix4.Run_DIF_aligned();
+	radix8.Run_DIF_aligned();
+
+	cout << " input " << endl;
+	ofstream inputOut;
+	inputOut.open("./inputOut.txt");
+	//cout << " # \t Time \t Real \t Imag " << endl;
+	for (int i = 0; i < POINTS; i++) {
+		//cout << i << fixed << "\t" << i << "\t" << dft.x[i].real << "\t" << dft.x[i].imag << endl;
+		inputOut << i << fixed << "\t" << i << "\t" << dft.x[i].real << "\t" << dft.x[i].imag << endl;
+	}
+	inputOut.close();
 
 	cout << " output dft: " << endl;
+	ofstream dftout;
+	dftout.open("./dftout.txt");
 	for (int i = 0; i < POINTS; i++) {
-		cout << i << fixed << setw(15) << dft.out[i].real << setw(15) << dft.out[i].imag << endl;
+		//cout << i << fixed << "\t" << dft.out[i].real << "\t" << dft.out[i].imag << endl;
+		dftout << i << fixed << "\t" << dft.out[i].real << "\t" << dft.out[i].imag << endl;
 	}
-	cout << " output radix-2: " << endl;
-	for (int i = 0; i < POINTS; i++) {
-		cout << i << fixed << setw(15) << radix2.x[i].real << setw(15) << radix2.x[i].imag << endl;
-	}
-	cout << " output radix-4: " << endl;
-	for (int i = 0; i < POINTS; i++) {
-		cout << i << fixed << setw(15) << radix4.x[i].real << setw(15) << radix4.x[i].imag << endl;
-	}
-	cout << " output radix-8: " << endl;
-	for (int i = 0; i < POINTS; i++) {
-		cout << i << fixed << setw(15) << radix8.x[i].real << setw(15) << radix8.x[i].imag << endl;
-	}
-	//cout << " output " << endl;
-	//for (int i = 0; i < POINTS; i++) {
-	//	cout << i << setw(15) << dft.out[i].real << " , " << setw(15) << radix4.x[i].real << " , " << setw(15) << dft.out[i].imag << setw(15) << radix4.x[i].imag << " , " << endl;
-	//}
+	dftout.close();
 
-	//cout << " output " << endl;
-	//for (int i = 0; i < POINTS; i++) {
-	//	cout << i << setw(15) << dft.out[i].real << " , " << setw(15) << radix8.x[i].real << " , " << setw(15) << dft.out[i].imag << setw(15) << radix8.x[i].imag << " , " << endl;
-	//}
-	//for (int i = 0; i < POINTS; i++) {
-	//	dft.x[i] = Complex<TYPE>(i, 0);
-	//}
-	//dft.bitReverse();
-	//for (int i = 0; i < POINTS; i++) {
-	//	cout << i << setw(15) << dft.x[i].real << endl;
-	//}
+	cout << " output radix-2: " << endl;
+	ofstream rad2out;
+	rad2out.open("./rad2out.txt");
+	for (int i = 0; i < POINTS; i++) {
+		//cout << i << fixed << "\t" << radix2.x[i].real << "\t" << radix2.x[i].imag << endl;
+		rad2out << i << fixed << "\t" << radix2.x[i].real << "\t" << radix2.x[i].imag << endl;
+	}
+	rad2out.close();
+
+	cout << " output radix-4: " << endl;
+	ofstream rad4out;
+	rad4out.open("./rad4out.txt");
+	for (int i = 0; i < POINTS; i++) {
+		//cout << i << fixed << "\t" << radix4.x[i].real << "\t" << radix4.x[i].imag << endl;
+		rad4out << i << fixed << "\t" << radix4.x[i].real << "\t" << radix4.x[i].imag << endl;
+	}
+	rad4out.close();
+
+	cout << " output radix-8: " << endl;
+	ofstream rad8out;
+	rad8out.open("./rad8out.txt");
+	for (int i = 0; i < POINTS; i++) {
+		//cout << i << fixed << "\t" << radix8.x[i].real << "\t" << radix8.x[i].imag << endl;
+		rad8out << i << fixed << "\t" << radix8.x[i].real << "\t" << radix8.x[i].imag << endl;
+	}
+	rad8out.close();
 
     return 0;
 }

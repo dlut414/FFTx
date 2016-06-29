@@ -1,8 +1,9 @@
-﻿Build started 2/14/2016 5:09:33 PM.
-     1>Project "C:\Users\KOZUKI\Documents\Visual Studio 2013\Projects\FFTx\fft\fft.vcxproj" on node 2 (Build target(s)).
-     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.Cpp.Platform.targets(64,5): error MSB8020: The build tools for v140 (Platform Toolset = 'v140') cannot be found. To build using the v140 build tools, please install v140 build tools.  Alternatively, you may upgrade to the current Visual Studio tools by selecting the Project menu or right-click the solution, and then selecting "Upgrade Solution...".
-     1>Done Building Project "C:\Users\KOZUKI\Documents\Visual Studio 2013\Projects\FFTx\fft\fft.vcxproj" (Build target(s)) -- FAILED.
+﻿Build started 6/22/2016 10:18:13 AM.
+     1>Project "C:\Users\hougen\Documents\Visual Studio 2015\Projects\fft\fft\fft.vcxproj" on node 2 (Build target(s)).
+     1>Link:
+         fft.vcxproj -> C:\Users\hougen\Documents\Visual Studio 2015\Projects\fft\x64\Release\fft.exe
+     1>Done Building Project "C:\Users\hougen\Documents\Visual Studio 2015\Projects\fft\fft\fft.vcxproj" (Build target(s)).
 
-Build FAILED.
+Build succeeded.
 
-Time Elapsed 00:00:00.00
+Time Elapsed 00:00:00.34

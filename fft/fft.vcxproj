@@ -22,7 +22,7 @@
     <ProjectGuid>{268D2F15-D2BA-4C99-BC29-CAD9EF7FB2B8}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>fft</RootNamespace>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.10240.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
